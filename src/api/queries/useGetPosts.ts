@@ -19,7 +19,7 @@ const getPosts = async ({ page, itemsPerPage }: Request): Promise<Post[]> => {
   const response = await instance.get(
     `posts?_start=${page}&_limit=${itemsPerPage}`
   );
-  toast('data was loaded');
+  toast(`${itemsPerPage} new posts were loaded`);
   return response.data;
 };
 
