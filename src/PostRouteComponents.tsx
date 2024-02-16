@@ -4,7 +4,9 @@ import { CommentsArr } from './api/schemas/posts';
 import {
   ErrorComponent,
   ErrorComponentProps,
+  Router,
   createRoute,
+  useNavigate,
 } from '@tanstack/react-router';
 import { rootRoute } from './App';
 
@@ -29,9 +31,11 @@ const PostRouteComponent = () => {
   const postQuery = useSuspenseQuery(postQueryOptions(postId));
   const comments = postQuery.data;
 
+  const navigate = useNavigate({ from: '/$postId' });
+
   return (
     <div style={{ fontSize: '30px' }}>
-      <h4>{postId}</h4>
+      <button onClick={() => navigate({ to: '/' })}>goback</button>
       {comments?.map((comment) => {
         return (
           <div key={comment.id}>
