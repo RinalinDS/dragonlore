@@ -1,30 +1,36 @@
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { instance } from '../config';
 import { queryKeys } from '../queryKeys';
-import { toast } from 'react-toastify';
+import { PostArr, PostsArraySchema } from '../schemas/posts';
 
 type Request = {
   page?: number;
   itemsPerPage?: number;
 };
 
-export type Post = {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-};
-
-const getPosts = async ({ page, itemsPerPage }: Request): Promise<Post[]> => {
+const getPosts = async ({ page, itemsPerPage }: Request): Promise<PostArr> => {
   const response = await instance.get(
     `posts?_start=${page}&_limit=${itemsPerPage}`
   );
-  toast(`${itemsPerPage} new posts were loaded`);
+
+  const result = PostsArraySchema.safeParse(response.data);
+
+  if (!result.success) {
+    toast('Get Posts request has wrong types');
+  } else {
+    toast('Get Posts request is fine');
+  }
+
   return response.data;
 };
 
 export const useGetPosts = ({ page = 0, itemsPerPage = 10 }: Request) => {
-  const { data, isLoading, isFetching } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: [queryKeys.posts, page, itemsPerPage],
     queryFn: () => getPosts({ itemsPerPage, page }),
   });

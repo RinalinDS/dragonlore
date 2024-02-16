@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
-  const { data = [], isFetching, isLoading } = useGetPosts({});
+  const { data, isFetching, isLoading } = useGetPosts({});
 
   return (
     <div>
