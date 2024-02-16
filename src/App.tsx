@@ -1,26 +1,20 @@
-import { useGetPosts } from './api/queries/useGetPosts';
+import { QueryClient } from '@tanstack/react-query';
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const App = () => {
-  const { data, isFetching, isLoading } = useGetPosts({});
-
+const App = () => {
   return (
     <div>
-      {isLoading || isFetching ? (
-        <div>...Posts Loading</div>
-      ) : (
-        data.map((post) => {
-          return (
-            <div key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.body}</p>
-            </div>
-          );
-        })
-      )}
+      <Outlet />
       <ToastContainer />
     </div>
   );
 };
+
+export const rootRoute = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
+  component: App,
+});

@@ -1,8 +1,11 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App.tsx';
+import { rootRoute } from './App.tsx';
+import { postRoute } from './PostRouteComponents.tsx';
+import { indexRoute } from './Posts.tsx';
 import './index.css';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,10 +16,31 @@ const queryClient = new QueryClient({
   },
 });
 
+const routeTree = rootRoute.addChildren([
+  // postsRoute.addChildren([postRoute, postsIndexRoute]),
+  indexRoute,
+  postRoute,
+]);
+
+// Set up a Router instance
+const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
+  context: {
+    queryClient,
+  },
+});
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>
 );
