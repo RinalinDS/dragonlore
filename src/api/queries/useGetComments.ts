@@ -10,9 +10,9 @@ export const getComments = async (postId: string): Promise<CommentsArr> => {
   const result = CommentArraySchema.safeParse(response.data);
 
   if (!result.success) {
-    toast('Get comments request has wrong types');
+    toast.error('Get comments request has wrong types');
   } else {
-    toast('Get comments request is fine');
+    toast.success('Get comments request is fine');
   }
 
   return response.data;

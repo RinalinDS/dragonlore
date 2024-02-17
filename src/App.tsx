@@ -8,7 +8,13 @@ const App = () => {
   return (
     <div>
       <Outlet />
-      <ToastContainer />
+      <ToastContainer
+        newestOnTop
+        closeOnClick
+        position="bottom-right"
+        theme="colored"
+        style={{ fontSize: '14px' }}
+      />
     </div>
   );
 };

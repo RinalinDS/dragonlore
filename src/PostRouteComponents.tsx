@@ -16,7 +16,7 @@ const PostRouteComponent = () => {
   return (
     <div style={{ fontSize: '30px' }}>
       <button onClick={() => navigate({ to: '/' })}>goback</button>
-      {comments?.map((comment) => {
+      {comments.map((comment) => {
         return (
           <div key={comment.id}>
             <div>comment from {comment.email}</div>

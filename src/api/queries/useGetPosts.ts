@@ -17,9 +17,9 @@ const getPosts = async ({ page, itemsPerPage }: Request): Promise<PostArr> => {
   const result = PostsArraySchema.safeParse(response.data);
 
   if (!result.success) {
-    toast('Get Posts request has wrong types');
+    toast.error('Get Posts request has wrong types');
   } else {
-    toast('Get Posts request is fine');
+    toast.success('Get Posts request is fine');
   }
 
   return response.data;

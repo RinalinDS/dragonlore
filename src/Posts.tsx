@@ -3,8 +3,13 @@ import { useGetPosts } from './api/queries/useGetPosts';
 import { rootRoute } from './App';
 import { postRoute } from './PostRouteComponents';
 
+const DEFAULT_PER_PAGE = 10;
+
 const Posts = () => {
-  const { data, isFetching, isLoading } = useGetPosts({});
+  const { data, isFetching, isLoading } = useGetPosts({
+    itemsPerPage: DEFAULT_PER_PAGE,
+    page: 0,
+  });
 
   return (
     <div>
