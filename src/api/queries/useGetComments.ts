@@ -3,19 +3,42 @@ import { toast } from 'react-toastify';
 import { instance } from '../config';
 import { queryKeys } from '../queryKeys';
 import { CommentArraySchema, CommentsArr } from '../schemas/posts';
+import { ZodError } from 'zod';
 
 export const getComments = async (postId: string): Promise<CommentsArr> => {
-  const response = await instance.get(`posts/${postId}/comments`);
+  try {
+    const response = await instance.get(`posts/${postId}/comments`);
 
-  const result = CommentArraySchema.safeParse(response.data);
+    const result = CommentArraySchema.parse(response.data);
 
-  if (!result.success) {
-    toast.error('Get comments request has wrong types');
-  } else {
-    toast.success('Get comments request is fine');
+    return result;
+  } catch (e) {
+    if (e instanceof ZodError) {
+      const uniqueMistakes = Array.from(
+        new Set(
+          e.issues.map((issue) => `${issue.message} in ${issue.path[1]} param`)
+        )
+      );
+
+      if (uniqueMistakes.length > 1) {
+        uniqueMistakes.forEach((errorMessage) => {
+          toast.error(`Validation error: ${errorMessage}`);
+        });
+      } else {
+        const firstError = e.issues[0];
+        toast.error(
+          `Validation error: ${firstError.message} in ${firstError.path[1]} param`
+        );
+      }
+    }
+    return [];
   }
 
-  return response.data;
+  // if (!result.success) {
+  //   toast.error('Get comments request has wrong types');
+  // } else {
+  //   toast.success('Get comments request is fine');
+  // }
 };
 
 export const useGetComments = (postId: string) => {
