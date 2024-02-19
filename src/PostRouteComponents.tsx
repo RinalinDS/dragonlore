@@ -1,6 +1,8 @@
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { createRoute, useNavigate } from '@tanstack/react-router';
 import { rootRoute } from './App';
 import { useGetComments } from './api/queries/useGetComments';
+import { PageLoader } from './PageLoader';
 
 const PostRouteComponent = () => {
   const { postId } = postRoute.useParams();
@@ -10,22 +12,35 @@ const PostRouteComponent = () => {
   const navigate = useNavigate({ from: '/$postId' });
 
   if (isFetching || isLoading) {
-    return <div>....Comments loading</div>;
+    return <PageLoader />;
   }
 
   return (
-    <div style={{ fontSize: '30px' }}>
-      <button onClick={() => navigate({ to: '/' })}>goback</button>
+    <Stack padding={2} gap={1} sx={{ bgcolor: '#cfe8fc', minHeight: '100vh' }}>
       {comments.map((comment) => {
         return (
-          <div key={comment.id}>
-            <div>comment from {comment.email}</div>
-            <h2>{comment.name}</h2>
-            <p>{comment.body}</p>
-          </div>
+          <Container key={comment.id}>
+            <Box>
+              <Typography variant="overline">
+                comment from {comment.email}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="h3">{comment.name}</Typography>
+              <Typography variant="body2">{comment.body}</Typography>
+            </Box>
+          </Container>
         );
       })}
-    </div>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => navigate({ to: '/' })}
+        style={{ alignSelf: 'center' }}
+      >
+        go back
+      </Button>
+    </Stack>
   );
 };
 
