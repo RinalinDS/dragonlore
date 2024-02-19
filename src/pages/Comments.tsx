@@ -1,10 +1,10 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { createRoute, useNavigate } from '@tanstack/react-router';
-import { rootRoute } from './App';
-import { useGetComments } from './api/queries/useGetComments';
-import { PageLoader } from './PageLoader';
+import { rootRoute } from '../App';
+import { useGetComments } from '../api/queries/useGetComments';
+import { PageLoader } from '../components/PageLoader';
 
-const PostRouteComponent = () => {
+const Comments = () => {
   const { postId } = postRoute.useParams();
 
   const { comments, isFetching, isLoading } = useGetComments(postId);
@@ -47,5 +47,5 @@ const PostRouteComponent = () => {
 export const postRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '$postId',
-  component: PostRouteComponent,
+  component: Comments,
 });

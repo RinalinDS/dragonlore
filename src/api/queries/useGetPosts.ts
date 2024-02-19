@@ -5,8 +5,8 @@ import { queryKeys } from '../queryKeys';
 import { PostArr, PostsArraySchema } from '../schemas/posts';
 
 type Request = {
-  page?: number;
-  itemsPerPage?: number;
+  page: number;
+  itemsPerPage: number;
 };
 
 const getPosts = async ({ page, itemsPerPage }: Request): Promise<PostArr> => {
@@ -19,7 +19,9 @@ const getPosts = async ({ page, itemsPerPage }: Request): Promise<PostArr> => {
   if (!result.success) {
     toast.error('Get Posts request has wrong types');
   } else {
-    toast.success('Get Posts request is fine');
+    toast.success(
+      `${itemsPerPage} new posts from page ${page + 1} loaded successfully`
+    );
   }
 
   return response.data;

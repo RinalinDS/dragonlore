@@ -3,8 +3,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { rootRoute } from './App.tsx';
-import { postRoute } from './PostRouteComponents.tsx';
-import { indexRoute } from './Posts.tsx';
+import { postRoute } from './pages/Comments.tsx';
+import { indexRoute } from './pages/Posts.tsx';
 import './index.css';
 
 const queryClient = new QueryClient({

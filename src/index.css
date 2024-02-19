@@ -8,7 +8,9 @@ html {
   font-size: 62.5%;
 }
 
-a {
+a:link,
+a:visited,
+a:active {
   text-decoration: none;
   color: inherit;
 }
@@ -18,6 +20,6 @@ a:hover {
   text-decoration: underline;
 }
 
-..MuiPagination-root {
-  font-size: 2rem;
+.MuiPagination-root {
+  font-size: 2rem !important;
 }

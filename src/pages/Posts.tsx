@@ -1,9 +1,9 @@
 import { Box, Pagination, Stack, Typography } from '@mui/material';
 import { Link, createRoute } from '@tanstack/react-router';
-import { rootRoute } from './App';
-import { PageLoader } from './PageLoader';
-import { postRoute } from './PostRouteComponents';
-import { useGetPosts } from './api/queries/useGetPosts';
+import { rootRoute } from '../App';
+import { PageLoader } from '../components/PageLoader';
+import { postRoute } from './Comments';
+import { useGetPosts } from '../api/queries/useGetPosts';
 import { ChangeEvent, useState } from 'react';
 
 const DEFAULT_PER_PAGE = 10;
