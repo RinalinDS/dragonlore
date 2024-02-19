@@ -3,8 +3,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { rootRoute } from './App.tsx';
-import { postRoute } from './pages/Comments.tsx';
-import { indexRoute } from './pages/Posts.tsx';
+import { commentsRoute } from './pages/Comments.tsx';
+import { postsRoute } from './pages/Posts.tsx';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -18,8 +18,8 @@ const queryClient = new QueryClient({
 
 const routeTree = rootRoute.addChildren([
   // postsRoute.addChildren([postRoute, postsIndexRoute]),
-  indexRoute,
-  postRoute,
+  commentsRoute,
+  postsRoute,
 ]);
 
 // Set up a Router instance

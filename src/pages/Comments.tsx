@@ -5,7 +5,7 @@ import { useGetComments } from '../api/queries/useGetComments';
 import { PageLoader } from '../components/PageLoader';
 
 const Comments = () => {
-  const { postId } = postRoute.useParams();
+  const { postId } = commentsRoute.useParams();
 
   const { comments, isFetching, isLoading } = useGetComments(postId);
 
@@ -44,7 +44,7 @@ const Comments = () => {
   );
 };
 
-export const postRoute = createRoute({
+export const commentsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '$postId',
   component: Comments,
