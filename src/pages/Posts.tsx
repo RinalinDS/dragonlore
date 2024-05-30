@@ -1,10 +1,10 @@
-import { Box, Pagination, Stack, Typography } from '@mui/material';
-import { Link, createRoute } from '@tanstack/react-router';
+import { Box, Pagination, Stack } from '@mui/material';
+import { createRoute } from '@tanstack/react-router';
 import { ChangeEvent, useState } from 'react';
 import { rootRoute } from '../App';
 import { useGetPosts } from '../api/queries/useGetPosts';
 import { PageLoader } from '../components/PageLoader';
-import { commentsRoute } from './Comments';
+import { Post } from '../components/Post';
 
 const DEFAULT_PER_PAGE = 10;
 
@@ -25,24 +25,8 @@ const Posts = () => {
       {isLoading || isFetching ? (
         <PageLoader />
       ) : (
-        data.map((post) => {
-          return (
-            <Box key={post.id}>
-              <Typography variant="h2" fontSize={'2.4rem'}>
-                <Link
-                  to={commentsRoute.to}
-                  params={{
-                    postId: post.id.toString(),
-                  }}
-                >
-                  {post.title}
-                </Link>
-              </Typography>
-              <Typography variant="body1" fontSize={'1.6rem'}>
-                {post.body}
-              </Typography>
-            </Box>
-          );
+        data.map(({ body, id, title }) => {
+          return <Post key={id} id={id} body={body} title={title} />;
         })
       )}
       <Box marginTop={2} alignSelf={'center'}>

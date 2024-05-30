@@ -1,8 +1,9 @@
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { createRoute, useNavigate } from '@tanstack/react-router';
 import { rootRoute } from '../App';
 import { useGetComments } from '../api/queries/useGetComments';
 import { PageLoader } from '../components/PageLoader';
+import { Comment } from '../components/Comment';
 
 const Comments = () => {
   const { postId } = commentsRoute.useParams();
@@ -17,20 +18,8 @@ const Comments = () => {
 
   return (
     <Stack padding={2} gap={1} sx={{ bgcolor: '#cfe8fc', minHeight: '100vh' }}>
-      {comments.map((comment) => {
-        return (
-          <Container key={comment.id}>
-            <Box>
-              <Typography variant="overline">
-                comment from {comment.email}
-              </Typography>
-            </Box>
-            <Box>
-              <Typography variant="h3">{comment.name}</Typography>
-              <Typography variant="body2">{comment.body}</Typography>
-            </Box>
-          </Container>
-        );
+      {comments.map(({ body, email, id, name }) => {
+        return <Comment key={id} body={body} email={email} name={name} />;
       })}
       <Button
         variant="contained"
